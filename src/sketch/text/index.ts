@@ -31,11 +31,15 @@ export function extendText() {
     });
     Object.defineProperty(target, "textBehaviour", {
         get: function () {
-            let val = this.sketchObject.textBehaviour();
-            return TextBehaviour[val];
+            return this.sketchObject.textBehaviour();
         },
-        set: function (val: TextBehaviour) {
-            return this.sketchObject.setTextBehaviour(val);
+        set: function (val) {
+            // Create a new style if it doesn't exist
+            if (!this.sketchObject.style) {
+                this.sketchObject.style = new sketch.Style();
+            }
+            // Set the text behavior through the style
+            this.sketchObject.style.textBehaviour = val;
         }
     });
     target.getFragments = function () { return getFragments(this) };
