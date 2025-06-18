@@ -5,9 +5,12 @@ A Sketch plugin for exporting and measuring design elements.
 ## Quick Start
 
 ### Option 1: Direct Download
-1. Download the latest plugin: [sketch-meaxure.sketchplugin](sketch-meaxure.sketchplugin)
-2. Double-click the downloaded file to install in Sketch
-3. Restart Sketch if it's already running
+1. Clone this repository
+2. Run `npm install` to install dependencies
+3. Run `npm run build` to build the plugin
+4. The plugin will be created in the `sketch-meaxure.sketchplugin` directory
+5. Double-click the plugin file to install in Sketch
+6. Restart Sketch if it's already running
 
 ### Option 2: Build from Source
 
