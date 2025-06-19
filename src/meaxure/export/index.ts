@@ -11,7 +11,7 @@ import { toHTMLEncode, newStopwatch, toSlug, emojiToEntities, getResourcePath } 
 import { writeFile, buildTemplate, exportImage, exportImageToBuffer } from "./files";
 import { logger } from "../common/logger";
 import { ExportData, ArtboardData } from "../interfaces";
-import { getLayerData } from "./layerData";
+import { getLayerData, isExportable } from "./layerData";
 import { clearSliceCache, getCollectedSlices } from "./slice";
 import { clearMaskStack } from "./mask";
 import { getDocumentColors } from "./colors";
@@ -176,27 +176,30 @@ function exportArtboardAdvanced(artboard: Artboard, data: ExportData, savePath: 
     // data.artboards[artboardIndex].imagePath = "preview/" + objectID + ".png";
     data.artboards[i].imagePath = "preview/" + encodeURI(data.artboards[i].slug) + ".png";
     data.artboards[i].imageIconPath = "preview/icons/" + encodeURI(data.artboards[i].slug) + ".png";
-    exportImage(
-        artboard,
-        {
+    if (isExportable(artboard)) {
+        exportImage(
+            artboard,
+            {
+                format: 'png',
+                // always export @2x (logic points * 2)
+                // if design resolution @2x, we export as is (scale=1)
+                // if design resolution @4x, we export half size (scale=0.5)
+                scale: 2 / data.resolution,
+                prefix: "",
+                suffix: "",
+            },
+            savePath + "/preview", data.artboards[i].slug
+        );
+
+        exportImage(artboard, {
             format: 'png',
-            // always export @2x (logic points * 2)
-            // if design resolution @2x, we export as is (scale=1)
-            // if design resolution @4x, we export half size (scale=0.5)
-            scale: 2 / data.resolution,
+            scale: 128 / Math.max(data.artboards[i].width, data.artboards[i].height),
             prefix: "",
             suffix: "",
-        },
-        savePath + "/preview", data.artboards[i].slug
-    );
-
-    exportImage(artboard, {
-        format: 'png',
-        scale: 128 / Math.max(data.artboards[i].width, data.artboards[i].height),
-        prefix: "",
-        suffix: "",
-    }, savePath + "/preview/icons", data.artboards[i].slug);
-
+        }, savePath + "/preview/icons", data.artboards[i].slug);
+    } else {
+        logger.warn(`Artboard ${artboard.name} is not exportable, skipping image export.`);
+    }
     writeFile({
         content: "<meta http-equiv=\"refresh\" content=\"0;url=../index.html#" + i + "\">",
         path: savePath + "/links",
@@ -205,21 +208,85 @@ function exportArtboardAdvanced(artboard: Artboard, data: ExportData, savePath: 
 }
 
 function exportArtboard(artboard: Artboard, exportData: ExportData, index: number, savePath: string, template: string) {
-    let data = JSON.parse(JSON.stringify(exportData.artboards[index]));
-    let imageBase64 = exportImageToBuffer(
-        artboard,
-        {
-            format: 'png',
-            // always export @2x (logic points * 2)
-            // if design resolution @2x, we export as is (scale=1)
-            // if design resolution @4x, we export half size (scale=0.5)
-            scale: 2 / exportData.resolution,
-            prefix: "",
-            suffix: "",
-        }
-    ).toString('base64');
-
-    data.imageBase64 = 'data:image/png;base64,' + imageBase64;
+    // Create a safe deep clone of the artboard data
+    let data: ArtboardData = {
+        pageName: exportData.artboards[index].pageName,
+        pageObjectID: exportData.artboards[index].pageObjectID,
+        name: exportData.artboards[index].name,
+        slug: exportData.artboards[index].slug,
+        objectID: exportData.artboards[index].objectID,
+        width: exportData.artboards[index].width,
+        height: exportData.artboards[index].height,
+        notes: [...exportData.artboards[index].notes],
+        layers: exportData.artboards[index].layers.map(layer => ({
+            objectID: layer.objectID,
+            type: layer.type,
+            name: layer.name,
+            rect: { ...layer.rect },
+            rotation: layer.rotation,
+            radius: layer.radius ? [...layer.radius] : [],
+            borders: layer.borders ? layer.borders.map(border => ({
+                fillType: border.fillType,
+                position: border.position,
+                thickness: border.thickness,
+                color: { ...border.color },
+                gradient: border.gradient ? { ...border.gradient } : undefined
+            })) : [],
+            fills: layer.fills ? layer.fills.map(fill => ({
+                fillType: fill.fillType,
+                color: { ...fill.color },
+                gradient: fill.gradient ? { ...fill.gradient } : undefined
+            })) : [],
+            shadows: layer.shadows ? layer.shadows.map(shadow => ({
+                type: shadow.type,
+                offsetX: shadow.offsetX,
+                offsetY: shadow.offsetY,
+                blurRadius: shadow.blurRadius,
+                spread: shadow.spread,
+                color: { ...shadow.color }
+            })) : [],
+            opacity: layer.opacity,
+            styleName: layer.styleName,
+            content: layer.content,
+            color: layer.color ? { ...layer.color } : undefined,
+            fontSize: layer.fontSize,
+            fontFace: layer.fontFace,
+            textAlign: layer.textAlign,
+            letterSpacing: layer.letterSpacing,
+            lineHeight: layer.lineHeight,
+            exportable: layer.exportable ? [...layer.exportable] : [],
+            css: layer.css ? [...layer.css] : [],
+            flow: layer.flow ? { ...layer.flow } : undefined
+        })),
+        flowStartPoint: exportData.artboards[index].flowStartPoint
+    };
+    
+    let imageBase64 = '';
+    if (isExportable(artboard)) {
+        imageBase64 = exportImageToBuffer(
+            artboard,
+            {
+                format: 'png',
+                // always export @2x (logic points * 2)
+                // if design resolution @2x, we export as is (scale=1)
+                // if design resolution @4x, we export half size (scale=0.5)
+                scale: 2 / exportData.resolution,
+                prefix: "",
+                suffix: "",
+            }
+        ).toString('base64');
+    } else {
+        logger.warn(`Artboard ${artboard.name} is not exportable, skipping image export.`);
+    }
+    
+    // Provide a fallback to prevent JSON parsing errors
+    if (imageBase64) {
+        data.imageBase64 = 'data:image/png;base64,' + imageBase64;
+    } else {
+        // Use a placeholder or remove the property to prevent JSON errors
+        data.imageBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='; // 1x1 transparent PNG
+    }
+    
     let newData = <ExportData>{
         resolution: exportData.resolution,
         unit: exportData.unit,

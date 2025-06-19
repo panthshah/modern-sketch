@@ -18,12 +18,17 @@ import { getFlow } from "./flow";
 import { tempLayers } from "./tempLayers";
 import { renameIfIsMarker } from "../helpers/renameOldMarkers";
 import { LayerPlaceholder, LayerPlaceholderType } from "./layers";
+import { logger } from "../common/logger";
 
 export function getLayerData(artboard: Artboard, layer: Layer | LayerPlaceholder, data: ArtboardData, byInfluence: boolean, symbolLayer?: Layer) {
     if (layer instanceof LayerPlaceholder) {
+        logger.debug(`[getLayerData] Processing placeholder layer`);
         dealWithPlaceholder(layer);
         return;
     }
+    
+    logger.debug(`[getLayerData] Processing layer: ${layer.name} (type: ${layer.type}) - Raw type value: ${JSON.stringify(layer.type)}`);
+    
     // compatible with meaxure markers
     renameIfIsMarker(layer);
     // stopwatch.tik('before updateMaskStackBeforeLayer');
@@ -44,15 +49,19 @@ function dealWithPlaceholder(p: LayerPlaceholder) {
 }
 
 function getLayerData2(artboard: Artboard, layer: Layer, data: ArtboardData, byInfluence: boolean, symbolLayer?: Layer) {
+    logger.debug(`[getLayerData2] Starting processing for layer: ${layer.name}`);
+    
     // stopwatch.tik('updateMaskStackBeforeLayer');
     let layerRect = getSMRect(layer, artboard, byInfluence);
     layerRect = applyMasks(layer, layerRect, artboard);
     if (!layerRect) {
+        logger.debug(`[getLayerData2] No layer rect for: ${layer.name}, skipping`);
         return;
     }
     // stopwatch.tik('applyMasks');
     let note = makeNote(layer, artboard, symbolLayer);
     if (note) {
+        logger.debug(`[getLayerData2] Found note for layer: ${layer.name}`);
         data.notes.push(note);
         return;
     }
@@ -66,9 +75,12 @@ function getLayerData2(artboard: Artboard, layer: Layer, data: ArtboardData, byI
         layerStates.isInSlice ||
         layerStates.isMeaXure ||
         layerStates.isInShapeGroup) {
+        logger.debug(`[getLayerData2] Layer ${layer.name} not exportable or filtered out`);
         return;
     }
 
+    logger.debug(`[getLayerData2] Layer ${layer.name} passed all checks, adding to export data`);
+    
     let layerType = getSMType(layer);
     // stopwatch.tik('get layerType');
 
@@ -152,15 +164,21 @@ function getSMRect(layer: Layer, artboard: Artboard, byInfluence: boolean): SMRe
         height: layerFrame.height,
     }
 }
-function isExportable(layer: Layer) {
-    return layer.type == sketch.Types.Text ||
+export function isExportable(layer: Layer) {
+    let exportable = layer.type == sketch.Types.Text ||
         layer.type == sketch.Types.Group ||
         layer.type == sketch.Types.Shape ||
         layer.type == sketch.Types.ShapePath ||
         layer.type == sketch.Types.Image ||
         layer.type == sketch.Types.Slice ||
         layer.type == sketch.Types.SymbolInstance ||
-        layer.type == sketch.Types.HotSpot
+        layer.type == sketch.Types.HotSpot;
+    
+    if (!exportable) {
+        logger.debug(`[isExportable] Layer "${layer.name}" (type: ${layer.type}) is NOT exportable`);
+    }
+    
+    return exportable;
 }
 function getLayerStates(layer: Layer): LayerStates {
     let isHidden = false;
@@ -170,8 +188,26 @@ function getLayerStates(layer: Layer): LayerStates {
     let isMeaXure = false;
     let isInShapeGroup = false;
 
-    while (layer.type != sketch.Types.Artboard && layer.type != sketch.Types.SymbolMaster) {
+    logger.debug(`[getLayerStates] Starting analysis for layer: ${layer.name} (type: ${layer.type})`);
+    
+    let iterationCount = 0;
+    const maxIterations = 100; // Safety limit to prevent infinite loops
+
+    // Check if this is an artboard-like container (Artboard, Frame, Graphic, SymbolMaster, or Page)
+    while (layer.type != sketch.Types.Artboard && 
+           layer.type != sketch.Types.SymbolMaster && 
+           layer.type != sketch.Types.Page &&
+           layer.parent) {
+        
+        iterationCount++;
+        if (iterationCount > maxIterations) {
+            logger.error(`[getLayerStates] Infinite loop detected! Layer: ${layer.name}, Type: ${layer.type}, Parent: ${layer.parent ? (layer.parent as any).name || 'unknown' : 'null'}`);
+            break;
+        }
+        
         let parent = layer.parent as Group;
+        logger.debug(`[getLayerStates] Iteration ${iterationCount}: Layer "${layer.name}" (${layer.type}) -> Parent "${parent.name}" (${parent.type})`);
+        
         if (!isMeaXure) isMeaXure = layer.name.startsWith('#meaxure-');
         // if parents is shape, this is in shape group
         if (!isInShapeGroup) isInShapeGroup = parent.type == sketch.Types.Shape;
@@ -181,6 +217,9 @@ function getLayerStates(layer: Layer): LayerStates {
         if (!isEmptyText) isEmptyText = layer.type == sketch.Types.Text && (layer as Text).isEmpty
         layer = parent;
     }
+    
+    logger.debug(`[getLayerStates] Completed analysis for layer: ${layer.name}. States: hidden=${isHidden}, locked=${isLocked}, inSlice=${isInSlice}, meaXure=${isMeaXure}, emptyText=${isEmptyText}, inShapeGroup=${isInShapeGroup}`);
+    
     return {
         isHidden: isHidden,
         isLocked: isLocked,

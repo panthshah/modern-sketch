@@ -119,7 +119,7 @@ function prepareExportData(): [ExportData, { [key: string]: Artboard }] {
     let artboardSet = new Set<string>();
     if (context.selection.length > 0) {
         for (let layer of context.selection.layers) {
-            if (layer.type == sketch.Types.Artboard || layer.type == sketch.Types.SymbolMaster) {
+            if (layer.type == sketch.Types.Artboard || layer.type == sketch.Types.SymbolMaster || layer.type == sketch.Types.Page) {
                 artboardSet.add(layer.id);
                 continue;
             }
@@ -137,7 +137,7 @@ function prepareExportData(): [ExportData, { [key: string]: Artboard }] {
 
     for (let page of context.document.pages) {
         let pageData = <PageInfo>{};
-        let artboards = page.layers.filter(p => p.type == sketch.Types.Artboard || artboardSet.has(p.id)) as Artboard[];
+        let artboards = page.layers.filter(p => p.type == sketch.Types.Artboard || p.type == sketch.Types.Page || artboardSet.has(p.id)) as Artboard[];
         pageData.name = page.name;
         pageData.objectID = page.id;
         pageData.artboards = [];

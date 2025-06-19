@@ -49,7 +49,9 @@ export function updateContext(ctx?: Context) {
         // properties always need to update
         context.page = context.document.selectedPage;
         // Get the selected artboard from the document's selection
-        let selectedArtboard = context.document.selectedLayers.layers.find(layer => layer.type === sketch.Types.Artboard);
+        let selectedArtboard = context.document.selectedLayers.layers.find(layer => 
+            layer.type === sketch.Types.Artboard || layer.type === sketch.Types.Page
+        );
         context.artboard = selectedArtboard ? sketch.Artboard.fromNative(selectedArtboard.sketchObject) : undefined;
         context.selection = context.document.selectedLayers;
         context.meaxureStyles = new MeaxureStyles(context.document);
