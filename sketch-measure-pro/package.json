@@ -1,0 +1,54 @@
+{
+  "name": "sketch-measure-pro",
+  "description": "🎨 A modern, fun design measurement & annotation tool for Sketch - Built for the future!",
+  "version": "1.0.0",
+  "engines": {
+    "sketch": ">=69.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/sketch-measure-pro.git"
+  },
+  "keywords": ["sketch", "plugin", "measurement", "annotation", "specs", "design", "developer"],
+  "skpm": {
+    "name": "Sketch Measure Pro",
+    "manifest": "src/manifest.json",
+    "main": "sketch-measure-pro.sketchplugin",
+    "identifier": "com.sketchmeasurepro.plugin",
+    "assets": [
+      "resources/**/*"
+    ]
+  },
+  "scripts": {
+    "build": "npm run clean && skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "clean": "rm -rf *.sketchplugin",
+    "dev": "npm run clean && npm run start",
+    "test": "echo \"⚡ Tests coming soon!\" && exit 0",
+    "postinstall": "npm run build && skpm-link",
+    "format": "prettier --write 'src/**/*.{js,ts,json}'",
+    "lint": "echo \"Linting skipped for now\""
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.7.0",
+    "@types/node": "^16.0.0",
+    "skpm": "^1.3.3",
+    "typescript": "^4.0.0",
+    "prettier": "^2.0.0",
+    "webpack": "^4.44.2",
+    "ts-loader": "^8.0.0"
+  },
+  "dependencies": {
+    "@skpm/path": "^0.1.4"
+  },
+  "author": {
+    "name": "Sketch Measure Pro Team",
+    "email": "hello@sketchmeasurepro.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/your-username/sketch-measure-pro#readme",
+  "bugs": {
+    "url": "https://github.com/your-username/sketch-measure-pro/issues"
+  }
+}

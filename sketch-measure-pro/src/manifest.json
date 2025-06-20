@@ -1,0 +1,130 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sketch-hq/SketchAPI/develop/docs/sketch-plugin-manifest-schema.json",
+  "identifier": "com.sketchmeasurepro.plugin",
+  "name": "Sketch Measure Pro",
+  "description": "🎨 A modern, fun design measurement & annotation tool for Sketch",
+  "version": "1.0.0",
+  "author": "Sketch Measure Pro Team",
+  "authorEmail": "hello@sketchmeasurepro.com",
+  "homepage": "https://github.com/your-username/sketch-measure-pro",
+  "icon": "icon.png",
+  "appcast": "https://github.com/your-username/sketch-measure-pro/releases.atom",
+  "compatibleVersion": "80.0.0",
+  "bundleVersion": 1,
+  "commands": [
+    {
+      "name": "🎯 Quick Measure",
+      "identifier": "quickMeasure",
+      "shortcut": "ctrl shift m",
+      "handler": "quickMeasure",
+      "script": "main.js"
+    },
+    {
+      "name": "📐 Measure Panel",
+      "identifier": "measurePanel",
+      "shortcut": "ctrl shift p",
+      "handler": "measurePanel",
+      "script": "main.js"
+    },
+    {
+      "name": "📏 Smart Dimensions",
+      "identifier": "smartDimensions",
+      "shortcut": "ctrl shift d",
+      "handler": "smartDimensions",
+      "script": "main.js"
+    },
+    {
+      "name": "📊 Spacing Inspector",
+      "identifier": "spacingInspector",
+      "shortcut": "ctrl shift s",
+      "handler": "spacingInspector",
+      "script": "main.js"
+    },
+    {
+      "name": "🎨 Color Palette",
+      "identifier": "colorPalette",
+      "shortcut": "ctrl shift c",
+      "handler": "colorPalette",
+      "script": "main.js"
+    },
+    {
+      "name": "💬 Smart Notes",
+      "identifier": "smartNotes",
+      "shortcut": "ctrl shift n",
+      "handler": "smartNotes",
+      "script": "main.js"
+    },
+    {
+      "name": "🎯 Coordinates",
+      "identifier": "coordinates",
+      "shortcut": "ctrl shift x",
+      "handler": "coordinates",
+      "script": "main.js"
+    },
+    {
+      "name": "📱 Export Specs",
+      "identifier": "exportSpecs",
+      "shortcut": "ctrl shift e",
+      "handler": "exportSpecs",
+      "script": "main.js"
+    },
+    {
+      "name": "🔧 Settings",
+      "identifier": "settings",
+      "handler": "settings",
+      "script": "main.js"
+    },
+    {
+      "name": "🎭 Toggle Overlays",
+      "identifier": "toggleOverlays",
+      "shortcut": "ctrl shift o",
+      "handler": "toggleOverlays",
+      "script": "main.js"
+    },
+    {
+      "name": "🧹 Clear All",
+      "identifier": "clearAll",
+      "shortcut": "ctrl shift backspace",
+      "handler": "clearAll",
+      "script": "main.js"
+    },
+    {
+      "name": "🌈 Theme Toggle",
+      "identifier": "themeToggle",
+      "shortcut": "ctrl shift t",
+      "handler": "themeToggle",
+      "script": "main.js"
+    },
+    {
+      "name": "📖 Help & Tips",
+      "identifier": "help",
+      "handler": "help",
+      "script": "main.js"
+    }
+  ],
+  "menu": {
+    "title": "Sketch Measure Pro",
+    "items": [
+      "quickMeasure",
+      "measurePanel",
+      "-",
+      "smartDimensions",
+      "spacingInspector",
+      "colorPalette",
+      "smartNotes",
+      "coordinates",
+      "-",
+      "exportSpecs",
+      "-",
+      "toggleOverlays",
+      "clearAll",
+      "themeToggle",
+      "-",
+      "settings",
+      "help"
+    ]
+  },
+  "resources": [
+    "resources"
+  ]
+}
