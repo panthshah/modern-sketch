@@ -1,116 +1,188 @@
-# Sketch MeaXure Plugin
+# 🎨 Sketch Measure Pro
 
-A Sketch plugin for exporting and measuring design elements.
+> A modern, fun design measurement & annotation tool for Sketch - Built for the future!
 
-## Quick Start
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/your-username/sketch-measure-pro)
+[![Sketch](https://img.shields.io/badge/sketch-80%2B-orange.svg)](https://www.sketch.com/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-### Option 1: Direct Download
-1. Clone this repository
-2. Run `npm install` to install dependencies
-3. Run `npm run build` to build the plugin
-4. The plugin will be created in the `sketch-meaxure.sketchplugin` directory
-5. Double-click the plugin file to install in Sketch
-6. Restart Sketch if it's already running
+**Sketch Measure Pro** is a completely rewritten, modern measurement plugin that brings joy back to design specification creation. Built with TypeScript, modern APIs, and a focus on user experience.
+
+## ✨ Features
+
+### 🎯 Quick Measurements
+- **One-click measurements** for selected layers
+- **Smart spacing detection** between elements
+- **Instant dimension display** with customizable units
+
+### 📐 Advanced Tools
+- **Measure Panel** - Comprehensive measurement interface
+- **Smart Dimensions** - Auto-detect spacing and dimensions
+- **Spacing Inspector** - Analyze spacing patterns
+- **Coordinates** - Precise positioning display
+
+### 🎨 Design Integration
+- **Color Palette** - Extract all colors from your design
+- **Smart Notes** - Contextual annotations
+- **Theme Support** - Light, dark, and auto themes
+- **Modern UI** - Beautiful, intuitive interface
+
+### 📱 Export & Handoff
+- **Multiple formats** - HTML, JSON, CSS, Swift, Flutter
+- **Developer handoff** - Generated code snippets
+- **Asset export** - Include design assets
+- **Collaboration** - Shareable measurement links
+
+## 🚀 Installation
+
+### Option 1: Download Release
+1. Download the latest `.sketchplugin` from [Releases](https://github.com/your-username/sketch-measure-pro/releases)
+2. Double-click to install in Sketch
 
 ### Option 2: Build from Source
-
-## Prerequisites
-
-- [Node.js](https://nodejs.org/) (v14 or later)
-- [Sketch](https://www.sketch.com/) (Latest version)
-- [skpm](https://github.com/skpm/skpm) (Sketch Plugin Manager)
-
-## Installation
-
-1. Clone the repository:
 ```bash
-git clone [your-repository-url]
-cd sketch-meaxure
-```
+# Clone the repository
+git clone https://github.com/your-username/sketch-measure-pro.git
+cd sketch-measure-pro
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Build the plugin:
-```bash
+# Build the plugin
 npm run build
+
+# Install in Sketch
+npm run postinstall
 ```
 
-4. Link the plugin to Sketch:
-```bash
-skpm-link
-```
+## 🎮 Usage
 
-## Development
+### Quick Start
+1. **Select layers** in your Sketch document
+2. **Press `Ctrl+Shift+M`** for instant measurements
+3. **Toggle overlays** with `Ctrl+Shift+O`
 
-- To start development:
-```bash
-npm run watch
-```
+### Keyboard Shortcuts
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+Shift+M` | Quick Measure |
+| `Ctrl+Shift+P` | Measure Panel |
+| `Ctrl+Shift+D` | Smart Dimensions |
+| `Ctrl+Shift+S` | Spacing Inspector |
+| `Ctrl+Shift+C` | Color Palette |
+| `Ctrl+Shift+N` | Smart Notes |
+| `Ctrl+Shift+X` | Coordinates |
+| `Ctrl+Shift+E` | Export Specs |
+| `Ctrl+Shift+O` | Toggle Overlays |
+| `Ctrl+Shift+T` | Theme Toggle |
+| `Ctrl+Shift+Backspace` | Clear All |
 
-- To build for production:
+## ⚙️ Configuration
+
+Access settings via the plugin menu or `Ctrl+Shift+S`:
+
+- **Themes**: Light, Dark, Auto
+- **Units**: px, pt, rem, em
+- **Precision**: Decimal places
+- **Export formats**: HTML, JSON, CSS, Swift, Flutter
+- **Visual styles**: Modern, Classic, Minimal
+
+## 🛠️ Development
+
+### Prerequisites
+- Node.js 16+
+- Sketch 80+
+- TypeScript 5+
+
+### Setup
 ```bash
+# Install dependencies
+npm install
+
+# Start development
+npm run dev
+
+# Build for production
 npm run build
+
+# Run linting
+npm run lint
+
+# Format code
+npm run format
 ```
 
-## Troubleshooting
+### Project Structure
+```
+src/
+├── main.ts              # Entry point
+├── utils/               # Utilities
+│   ├── sketch-api.ts    # Sketch API wrapper
+│   └── logger.ts        # Logging system
+├── core/                # Core managers
+│   ├── config-manager.ts
+│   ├── theme-manager.ts
+│   ├── overlay-manager.ts
+│   └── help-manager.ts
+└── features/            # Feature implementations
+    ├── quick-measure.ts
+    ├── measure-panel.ts
+    ├── smart-dimensions.ts
+    ├── spacing-inspector.ts
+    ├── color-palette.ts
+    ├── smart-notes.ts
+    ├── coordinates.ts
+    └── spec-exporter.ts
+```
 
-If Sketch freezes:
-1. Force quit Sketch
-2. Delete the plugin from Sketch's plugin folder
-3. Rebuild and relink the plugin
+## 🎨 Architecture
 
-## Project Structure
+**Sketch Measure Pro** is built with modern software architecture principles:
 
-- `src/meaxure/` - Main plugin code
-  - `export/` - Export functionality
-  - `common/` - Shared utilities
-  - `helpers/` - Helper functions
-- `src/ui/` - UI components
-- `scripts/` - Build scripts
+- **TypeScript** for type safety and better DX
+- **Modular design** with clear separation of concerns
+- **Theme system** with beautiful color schemes
+- **Error handling** and graceful degradation
+- **Extensible** plugin architecture
+- **Modern ES2020** features
 
-## Notes
+## 🤝 Contributing
 
-- The plugin requires Sketch's developer mode to be enabled
-- Make sure to have the latest version of Sketch installed
-- If you encounter TypeScript errors related to React, they can be safely ignored as they don't affect the plugin's functionality
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-## Support
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
-For any issues or questions, please contact the development team.
+## 📝 Changelog
 
-# Sketch MeaXure
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
-> Thanks [@utom](https://github.com/utom) for his great work, `Sketch Measure` is really a life saver when I share design specifications to co-workers.
-> But it lack of maintenance in recent year, that's why I start this project.
+## 📄 License
 
-Sketch MeaXure is a re-implemention of `Sketch Measure` with TypeScript, uses Sketch JavaScript API. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-It aims to be:
+## 🙏 Acknowledgments
 
-1. More stable, not likely to break down after Sketch update.
-1. Easy to maintain.
+- **Original Sketch MeaXure** - Inspiration for the concept
+- **Sketch Team** - For the awesome design tool and APIs
+- **Design Community** - For feedback and feature requests
 
-## Improvements
+## 💬 Support
 
-Improvements that users can recognize:
+- 📖 [Documentation](https://github.com/your-username/sketch-measure-pro/wiki)
+- 🐛 [Report Issues](https://github.com/your-username/sketch-measure-pro/issues)
+- 💬 [Discussions](https://github.com/your-username/sketch-measure-pro/discussions)
+- 📧 [Email Support](mailto:hello@sketchmeasurepro.com)
 
-1. Fully works with lastest version of Sketch (v66).
-1. The latest `Tint` feature support.
-1. Easily resize markers, without concerns to break them. (The `resizing constrain` feature).
-1. Export directly with `Anima stacks` activated.
-1. Customize the order of exported artboards.
-1. Better display of text fragments.
-1. Re-organize functions and panels.
+---
 
-## Notice
+<div align="center">
 
-If you encounter problems managing (toggle hidden/locked, remove, and export) markers created by Sketch Measure, run the menu `Plugin - Sketch MeaXure - Help - Rename Old Markers`.
+**Built with ❤️ for the design community**
 
-## Installation
+[Website](https://sketchmeasurepro.com) • [Documentation](https://docs.sketchmeasurepro.com) • [Twitter](https://twitter.com/sketchmeasurepro)
 
-- [Download](https://github.com/qjebbs/sketch-meaxure/releases/latest/download/sketch-meaxure.sketchplugin.zip) the latest release of the plugin
-- Un-zip
-- Double-click on Sketch-Meaxure.sketchplugin
+</div>

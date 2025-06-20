@@ -1,22 +1,36 @@
 {
     "compilerOptions": {
+        "target": "es2020",
         "module": "commonjs",
-        "target": "es6",
+        "lib": ["es2020", "dom"],
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "strict": true,
         "noImplicitAny": false,
         "sourceMap": true,
         "rootDir": "src",
-        "noEmitOnError": true,
-        "lib": [
-            "es6"
-        ],
+        "outDir": "dist",
+        "noEmitOnError": false,
+        "declaration": true,
+        "declarationMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
         "typeRoots": [
             "node_modules/@types",
-            "src/@custom_types"
-        ]
+            "src/@types"
+        ],
+        "types": ["node"]
     },
+    "include": [
+        "src/**/*"
+    ],
     "exclude": [
         "node_modules",
-        "src/@custom_types",
-        "ui",
+        "dist",
+        "*.sketchplugin"
     ]
 }

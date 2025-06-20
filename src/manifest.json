@@ -1,154 +1,130 @@
 {
   "$schema": "https://raw.githubusercontent.com/sketch-hq/SketchAPI/develop/docs/sketch-plugin-manifest-schema.json",
+  "identifier": "com.sketchmeasurepro.plugin",
+  "name": "Sketch Measure Pro",
+  "description": "🎨 A modern, fun design measurement & annotation tool for Sketch",
+  "version": "1.0.0",
+  "author": "Sketch Measure Pro Team",
+  "authorEmail": "hello@sketchmeasurepro.com",
+  "homepage": "https://github.com/your-username/sketch-measure-pro",
   "icon": "icon.png",
+  "appcast": "https://github.com/your-username/sketch-measure-pro/releases.atom",
+  "compatibleVersion": "80.0.0",
+  "bundleVersion": 1,
   "commands": [
     {
-      "name": "Toolbar",
-      "identifier": "commandToolbar",
-      "shortcut": "ctrl shift b",
-      "handler": "commandToolbar",
-      "script": "mark_bundle.js"
+      "name": "🎯 Quick Measure",
+      "identifier": "quickMeasure",
+      "shortcut": "ctrl shift m",
+      "handler": "quickMeasure",
+      "script": "main.js"
     },
     {
-      "name": "Mark Overlay",
-      "identifier": "commandOverlays",
-      "shortcut": "ctrl shift 1",
-      "handler": "commandOverlays",
-      "script": "mark_bundle.js"
+      "name": "📐 Measure Panel",
+      "identifier": "measurePanel",
+      "shortcut": "ctrl shift p",
+      "handler": "measurePanel",
+      "script": "main.js"
     },
     {
-      "name": "Mark Sizes",
-      "identifier": "commandSizes",
-      "shortcut": "ctrl shift 2",
-      "handler": "commandSizes",
-      "script": "mark_bundle.js"
+      "name": "📏 Smart Dimensions",
+      "identifier": "smartDimensions",
+      "shortcut": "ctrl shift d",
+      "handler": "smartDimensions",
+      "script": "main.js"
     },
     {
-      "name": "Mark Spacings",
-      "identifier": "commandSpacings",
-      "shortcut": "ctrl shift 3",
-      "handler": "commandSpacings",
-      "script": "mark_bundle.js"
+      "name": "📊 Spacing Inspector",
+      "identifier": "spacingInspector",
+      "shortcut": "ctrl shift s",
+      "handler": "spacingInspector",
+      "script": "main.js"
     },
     {
-      "name": "Mark Properties",
-      "identifier": "commandProperties",
-      "shortcut": "ctrl shift 4",
-      "handler": "commandProperties",
-      "script": "mark_bundle.js"
+      "name": "🎨 Color Palette",
+      "identifier": "colorPalette",
+      "shortcut": "ctrl shift c",
+      "handler": "colorPalette",
+      "script": "main.js"
     },
     {
-      "name": "Mark Note",
-      "identifier": "commandNote",
-      "shortcut": "ctrl shift 5",
-      "handler": "commandNote",
-      "script": "mark_bundle.js"
+      "name": "💬 Smart Notes",
+      "identifier": "smartNotes",
+      "shortcut": "ctrl shift n",
+      "handler": "smartNotes",
+      "script": "main.js"
     },
     {
-      "name": "Mark Coordinate",
-      "identifier": "commandCoordinate",
-      "shortcut": "ctrl shift 6",
-      "handler": "commandCoordinate",
-      "script": "mark_bundle.js"
+      "name": "🎯 Coordinates",
+      "identifier": "coordinates",
+      "shortcut": "ctrl shift x",
+      "handler": "coordinates",
+      "script": "main.js"
     },
     {
-      "name": "Spec Export",
-      "identifier": "commandExport",
+      "name": "📱 Export Specs",
+      "identifier": "exportSpecs",
       "shortcut": "ctrl shift e",
-      "handler": "commandExport",
-      "script": "mark_bundle.js"
+      "handler": "exportSpecs",
+      "script": "main.js"
     },
     {
-      "name": "Toggle Hidden",
-      "identifier": "commandHidden",
-      "shortcut": "ctrl shift h",
-      "handler": "commandHidden",
-      "script": "mark_bundle.js"
+      "name": "🔧 Settings",
+      "identifier": "settings",
+      "handler": "settings",
+      "script": "main.js"
     },
     {
-      "name": "Toggle Locked",
-      "identifier": "commandLocked",
-      "shortcut": "ctrl shift l",
-      "handler": "commandLocked",
-      "script": "mark_bundle.js"
+      "name": "🎭 Toggle Overlays",
+      "identifier": "toggleOverlays",
+      "shortcut": "ctrl shift o",
+      "handler": "toggleOverlays",
+      "script": "main.js"
     },
     {
-      "name": "Clear Marks",
-      "identifier": "commandClear",
-      "shortcut": "",
-      "handler": "commandClear",
-      "script": "mark_bundle.js"
+      "name": "🧹 Clear All",
+      "identifier": "clearAll",
+      "shortcut": "ctrl shift backspace",
+      "handler": "clearAll",
+      "script": "main.js"
     },
     {
-      "name": "Settings",
-      "identifier": "commandSettings",
-      "shortcut": "",
-      "handler": "commandSettings",
-      "script": "mark_bundle.js"
+      "name": "🌈 Theme Toggle",
+      "identifier": "themeToggle",
+      "shortcut": "ctrl shift t",
+      "handler": "themeToggle",
+      "script": "main.js"
     },
     {
-      "name": "Rename Old Markers",
-      "identifier": "commandRenameOldMarkers",
-      "handler": "commandRenameOldMarkers",
-      "script": "mark_bundle.js"
-    },
-    {
-      "name": "Run Script",
-      "identifier": "commandRunScript",
-      "handler": "commandRunScript",
-      "script": "mark_bundle.js"
-    },
-    {
-      "name": "Feedback",
-      "identifier": "linkFeedback",
-      "handler": "linkFeedback",
-      "script": "mark_bundle.js"
-    },
-    {
-      "name": "Home",
-      "identifier": "linkHome",
-      "handler": "linkHome",
-      "script": "mark_bundle.js"
-    },
-    {
-      "name": "Init",
-      "identifier": "commandInit",
-      "handlers": {
-        "actions": {
-          "OpenDocument": "commandInit"
-        }
-      },
-      "script": "mark_bundle.js"
+      "name": "📖 Help & Tips",
+      "identifier": "help",
+      "handler": "help",
+      "script": "main.js"
     }
   ],
   "menu": {
-    "isRoot": false,
+    "title": "Sketch Measure Pro",
     "items": [
-      "commandToolbar",
+      "quickMeasure",
+      "measurePanel",
       "-",
-      "commandOverlays",
-      "commandSizes",
-      "commandSpacings",
-      "commandProperties",
-      "commandNote",
-      "commandCoordinate",
+      "smartDimensions",
+      "spacingInspector",
+      "colorPalette",
+      "smartNotes",
+      "coordinates",
       "-",
-      "commandExport",
+      "exportSpecs",
       "-",
-      "commandHidden",
-      "commandLocked",
-      "commandClear",
+      "toggleOverlays",
+      "clearAll",
+      "themeToggle",
       "-",
-      "commandSettings",
-      {
-        "title": "Help",
-        "items": [
-          "commandRenameOldMarkers",
-          "linkHome",
-          "linkFeedback"
-        ]
-      }
-    ],
-    "title": "Sketch MeaXure"
-  }
+      "settings",
+      "help"
+    ]
+  },
+  "resources": [
+    "resources"
+  ]
 }
